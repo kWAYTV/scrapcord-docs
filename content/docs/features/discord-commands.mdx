@@ -1,5 +1,5 @@
 ---
-title: Discord Commands
+title: 🤖 Discord Commands
 description: Complete list of Scrapcord's Discord commands
 ---
 
@@ -7,95 +7,95 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 
-# Discord Commands
+# 🤖 Discord Commands
 
 Scrapcord uses Discord's slash commands for all functionality. This guide provides a complete reference of available commands.
 
 <Callout type="warning">
-  All commands except `/ping` require administrator permissions in Discord.
+  👑 All commands except `/ping` require administrator permissions in Discord.
 </Callout>
 
-## Server Management
+## 🎮 Server Management
 
-### Server Commands
+### 🖥️ Server Commands
 
 <Tabs items={["Basic", "Advanced", "Examples"]}>
     <Tab>
         | Command | Description | Example |
         |---------|-------------|---------|
-        | `/server add` | Add a new server | Opens a modal form |
-        | `/server list` | List all servers | Shows all registered servers |
-        | `/server delete` | Remove a server | `/server delete server:rust-main` |
+        | `/server add` | ➕ Add a new server | Opens a modal form |
+        | `/server list` | 📋 List all servers | Shows all registered servers |
+        | `/server delete` | 🗑️ Remove a server | `/server delete server:rust-main` |
     </Tab>
     <Tab>
         ```bash
-        # Add a new server
+        # ➕ Add a new server
         /server add
         # Opens a modal with:
         # - Server ID (e.g., rust-main)
         # - Server Name (e.g., 🌟 Main Server)
         # - Config Name (optional, defaults to "default")
 
-        # List all servers
+        # 📋 List all servers
         /server list
         # Shows:
         # - Server ID and name
         # - Creation date
         # - Available configurations
 
-        # Delete a server
+        # 🗑️ Delete a server
         /server delete server:rust-main
         # Removes server and all configurations
         ```
     </Tab>
     <Tab>
         ```bash
-        # Add a staging server
+        # ➕ Add a staging server
         /server add
         # Fill modal with:
         # - Server ID: rust-staging
         # - Server Name: 🔧 Staging Server
         # - Config: staging
 
-        # List specific server
+        # 📋 List specific server
         /server list server:rust-staging
         # Shows only staging server details
 
-        # Delete staging server
+        # 🗑️ Delete staging server
         /server delete server:rust-staging hidden:false
         # Shows deletion confirmation publicly
         ```
     </Tab>
 </Tabs>
 
-### Action Commands
+### ⚡ Action Commands
 
 <Tabs items={["Basic", "Advanced", "Examples"]}>
     <Tab>
         | Command | Description | Example |
         |---------|-------------|---------|
-        | `/action command` | Execute server command | `/action command server:rust-main command:"oxide.reload"` |
-        | `/action message` | Send chat message | `/action message server:rust-main message:"Server restarting"` |
+        | `/action command` | 🔧 Execute server command | `/action command server:rust-main command:"oxide.reload"` |
+        | `/action message` | 💬 Send chat message | `/action message server:rust-main message:"Server restarting"` |
     </Tab>
     <Tab>
         ```bash
-        # Execute command
+        # 🔧 Execute command
         /action command server:rust-main command:"oxide.reload *" config:weekly
         # Reloads all plugins using weekly config
 
-        # Send message
+        # 💬 Send message
         /action message server:rust-main message:"Maintenance in 10 minutes" hidden:false
         # Sends chat message and shows response publicly
         ```
     </Tab>
     <Tab>
         ```bash
-        # Common commands
+        # 🔧 Common commands
         /action command server:rust-main command:"say Server restart in 5 minutes"
         /action command server:rust-main command:"oxide.reload BetterLoot"
         /action command server:rust-main command:"env.time 12"
 
-        # Common messages
+        # 💬 Common messages
         /action message server:rust-main message:"Welcome to our server! Discord: discord.gg/example"
         /action message server:rust-main message:"⚠️ Server wipe in 30 minutes! ⚠️"
         /action message server:rust-main message:"🎉 Event starting at G10 in 5 minutes!"
@@ -103,26 +103,26 @@ Scrapcord uses Discord's slash commands for all functionality. This guide provid
     </Tab>
 </Tabs>
 
-## Configuration Management
+## ⚙️ Configuration Management
 
-### Config Commands
+### 📝 Config Commands
 
 <Tabs items={["Basic", "Advanced", "Examples"]}>
     <Tab>
         | Command | Description | Example |
         |---------|-------------|---------|
-        | `/config add` | Upload configuration | `/config add server:rust-main file:config.yaml` |
-        | `/config list` | List configurations | `/config list server:rust-main` |
-        | `/config show` | View configuration | `/config show server:rust-main name:default` |
-        | `/config delete` | Delete configuration | `/config delete server:rust-main name:custom` |
+        | `/config add` | 📤 Upload configuration | `/config add server:rust-main file:config.yaml` |
+        | `/config list` | 📋 List configurations | `/config list server:rust-main` |
+        | `/config show` | 👀 View configuration | `/config show server:rust-main name:default` |
+        | `/config delete` | 🗑️ Delete configuration | `/config delete server:rust-main name:custom` |
     </Tab>
     <Tab>
         ```bash
-        # Add configuration
+        # 📤 Add configuration
         /config add server:rust-main file:config.yaml name:weekly
         # Uploads new configuration named "weekly"
 
-        # List configurations
+        # 📋 List configurations
         /config list server:rust-main
         # Shows:
         # - Configuration names
@@ -130,59 +130,59 @@ Scrapcord uses Discord's slash commands for all functionality. This guide provid
         # - File patterns
         # - Command counts
 
-        # View configuration
+        # 👀 View configuration
         /config show server:rust-main name:weekly
         # Displays full configuration details
 
-        # Delete configuration
+        # 🗑️ Delete configuration
         /config delete server:rust-main name:weekly
         # Removes specific configuration
         ```
     </Tab>
     <Tab>
         ```bash
-        # Add weekly config
+        # 📤 Add weekly config
         /config add server:rust-main file:weekly.yaml name:weekly
         # Upload weekly wipe configuration
 
-        # Add monthly config
+        # 📤 Add monthly config
         /config add server:rust-main file:monthly.yaml name:monthly
         # Upload monthly wipe configuration
 
-        # Compare configs
+        # 👀 Compare configs
         /config show server:rust-main name:weekly
         /config show server:rust-main name:monthly
         # View both for comparison
 
-        # Clean up old config
+        # 🗑️ Clean up old config
         /config delete server:rust-main name:old-weekly
         # Remove outdated configuration
         ```
     </Tab>
 </Tabs>
 
-## Schedule Management
+## 📅 Schedule Management
 
-### Schedule Commands
+### ⏰ Schedule Commands
 
 <Tabs items={["Basic", "Advanced", "Examples"]}>
     <Tab>
         | Command | Description | Example |
         |---------|-------------|---------|
-        | `/schedule add` | Add wipe schedule | `/schedule add server:rust-main cron:"0 4 * * *"` |
-        | `/schedule list` | List schedules | `/schedule list server:rust-main` |
-        | `/schedule delete` | Remove schedule | `/schedule delete job:12345` |
-        | `/schedule toggle` | Enable/disable schedule | `/schedule toggle job:12345` |
-        | `/schedule run` | Execute wipe manually | `/schedule run job:12345` |
-        | `/schedule cheatsheet` | Show cron examples | Shows common patterns |
+        | `/schedule add` | ➕ Add wipe schedule | `/schedule add server:rust-main cron:"0 4 * * *"` |
+        | `/schedule list` | 📋 List schedules | `/schedule list server:rust-main` |
+        | `/schedule delete` | 🗑️ Remove schedule | `/schedule delete job:12345` |
+        | `/schedule toggle` | 🔄 Enable/disable schedule | `/schedule toggle job:12345` |
+        | `/schedule run` | ▶️ Execute wipe manually | `/schedule run job:12345` |
+        | `/schedule cheatsheet` | 📖 Show cron examples | Shows common patterns |
     </Tab>
     <Tab>
         ```bash
-        # Add schedule
+        # ➕ Add schedule
         /schedule add server:rust-main cron:"0 4 * * 4" config:weekly
         # Weekly wipe every Thursday at 4 AM UTC
 
-        # List schedules
+        # 📋 List schedules
         /schedule list server:rust-main
         # Shows:
         # - Schedule ID
@@ -190,7 +190,7 @@ Scrapcord uses Discord's slash commands for all functionality. This guide provid
         # - Next run time
         # - Configuration used
 
-        # Manage schedule
+        # 🔄 Manage schedule
         /schedule toggle job:12345  # Enable/disable
         /schedule delete job:12345  # Remove schedule
         /schedule run job:12345     # Execute now
@@ -198,99 +198,98 @@ Scrapcord uses Discord's slash commands for all functionality. This guide provid
     </Tab>
     <Tab>
         ```bash
-        # Weekly wipe schedule
+        # 📅 Weekly wipe schedule
         /schedule add server:rust-main cron:"0 4 * * 4" config:weekly
         # Every Thursday at 4 AM UTC
 
-        # Monthly wipe schedule
+        # 📅 Monthly wipe schedule
         /schedule add server:rust-main cron:"0 4 1 * *" config:monthly
         # First day of month at 4 AM UTC
 
-        # Development schedule
+        # 🔧 Development schedule
         /schedule add server:rust-staging cron:"0 */6 * * *" config:testing
         # Every 6 hours for testing
 
-        # Force wipe now
+        # ▶️ Force wipe now
         /schedule run job:12345 force:true
         # Immediate wipe ignoring cooldown
         ```
     </Tab>
 </Tabs>
 
-## Utility Commands
+## 🛠️ Utility Commands
 
-### Bot Management
+### 🤖 Bot Management
 
 <Tabs items={["Basic", "Advanced", "Examples"]}>
     <Tab>
         | Command | Description | Example |
         |---------|-------------|---------|
-        | `/ping` | Check bot latency | Shows response time |
-        | `/log_channel` | Set log channel | `/log_channel channel:#bot-logs` |
-        | `.sync` | Sync slash commands | `.sync` or `.sync guild_id` |
+        | `/ping` | 📡 Check bot latency | Shows response time |
+        | `/log_channel` | 📝 Set log channel | `/log_channel channel:#bot-logs` |
+        | `.sync` | 🔄 Sync slash commands | `.sync` or `.sync guild_id` |
     </Tab>
     <Tab>
         ```bash
-        # Check bot status
+        # 📡 Check bot status
         /ping
         # Shows:
         # - Bot latency
         # - API response time
         # - Uptime
 
-        # Configure logging
+        # 📝 Configure logging
         /log_channel channel:#bot-logs
         # Sets channel for bot logs
 
-        # Sync commands
+        # 🔄 Sync commands
         .sync              # Global sync
         .sync 123456789   # Guild sync
         ```
     </Tab>
     <Tab>
         ```bash
-        # Set up logging
-        /log_channel channel:#rust-logs category:servers
-        # Dedicated logs for Rust servers
+        # 📡 Advanced ping
+        /ping hidden:true
+        # Shows status privately
 
-        # Development sync
-        .sync 123456789
-        # Sync commands to test server
+        # 📝 Log setup
+        /log_channel channel:#server-logs category:rust
+        # Sets logs with category
 
-        # Production sync
-        .sync
-        # Global command sync
+        # 🔄 Targeted sync
+        .sync 123456789   # Dev server
+        .sync 987654321   # Prod server
         ```
     </Tab>
 </Tabs>
 
-## Response Types
+## 📊 Response Types
+
+### 💬 Message Types
 
 <Steps>
     <Step>
-        **Success** 🟢
+        **✅ Success** 
         - Command executed successfully
-        - Operation completed
-        - Schedule created/updated
-        - Configuration saved
+        - Operation completed without errors
+        - Expected result achieved
     </Step>
     <Step>
-        **Warning** 🟡
-        - Operation in progress
-        - Partial success
-        - Schedule disabled
-        - Configuration override
+        **⚠️ Warning**
+        - Operation completed with cautions
+        - Potential issues detected
+        - Non-critical errors occurred
     </Step>
     <Step>
-        **Error** 🔴
-        - Command failed
-        - Invalid parameters
-        - Permission denied
-        - Server offline
+        **❌ Error**
+        - Command failed to execute
+        - Critical error occurred
+        - Operation could not complete
     </Step>
 </Steps>
 
-## Best Practices
+## 📚 Best Practices
 
 <Steps>
     <Step>

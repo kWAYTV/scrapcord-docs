@@ -1,5 +1,5 @@
 ---
-title: Basic Configuration
+title: ⚙️ Basic Configuration
 description: Learn how to configure Scrapcord for your server
 ---
 
@@ -7,19 +7,19 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 
-# Basic Configuration
+# ⚙️ Basic Configuration
 
 This guide will help you configure Scrapcord for your server. We'll go through each section of the `config.yaml` file and explain what each setting does.
 
 <Callout type="warning">
-  Never share your configuration file with others as it contains sensitive information like API keys and tokens.
+  🔒 Never share your configuration file with others as it contains sensitive information like API keys and tokens.
 </Callout>
 
-## Configuration File Structure
+## 📝 Configuration File Structure
 
 <Steps>
     <Step>
-        **APP Section**
+        **🏷️ APP Section**
         <Tabs items={["Basic", "Custom"]}>
             <Tab>
                 ```yaml
@@ -44,14 +44,14 @@ This guide will help you configure Scrapcord for your server. We'll go through e
         </Tabs>
         
         These settings control the bot's branding and basic functionality:
-        - `app_logo`: URL for the bot's logo (used in embeds)
-        - `app_name`: Name of your bot instance
-        - `app_url`: Your bot's website URL
-        - `app_version`: Current version number
-        - `log_file`: Name of the log file
+        - 🖼️ `app_logo`: URL for the bot's logo (used in embeds)
+        - 📛 `app_name`: Name of your bot instance
+        - 🔗 `app_url`: Your bot's website URL
+        - 🏷️ `app_version`: Current version number
+        - 📄 `log_file`: Name of the log file
     </Step>
     <Step>
-        **BOT Section**
+        **🤖 BOT Section**
         <Tabs items={["Development", "Production"]}>
             <Tab>
                 ```yaml
@@ -74,17 +74,17 @@ This guide will help you configure Scrapcord for your server. We'll go through e
         </Tabs>
 
         Essential Discord bot settings:
-        - `bot_prefix`: Command prefix for legacy commands
-        - `bot_token`: Your Discord bot token
-        - `dev_guild_id`: Your development server's ID
-        - `logs_channel`: Channel ID for bot logs
+        - ❗ `bot_prefix`: Command prefix for legacy commands
+        - 🔑 `bot_token`: Your Discord bot token
+        - 🏠 `dev_guild_id`: Your development server's ID
+        - 📝 `logs_channel`: Channel ID for bot logs
 
         <Callout type="error">
-            Never share your `bot_token`! Keep it private and secure.
+            🚫 Never share your `bot_token`! Keep it private and secure.
         </Callout>
     </Step>
     <Step>
-        **PTERODACTYL Section**
+        **🎮 PTERODACTYL Section**
         <Tabs items={["Basic", "Advanced"]}>
             <Tab>
                 ```yaml
@@ -104,80 +104,85 @@ This guide will help you configure Scrapcord for your server. We'll go through e
         </Tabs>
 
         Pterodactyl panel connection settings:
-        - `ptero_panel_url`: Your panel's URL
-        - `ptero_api_key`: Client API key from Pterodactyl
+        - 🌐 `ptero_panel_url`: Your panel's URL
+        - 🔑 `ptero_api_key`: Client API key from Pterodactyl
 
         <Callout type="error">
-            Keep your `ptero_api_key` private! It provides access to your servers.
+            🚫 Keep your `ptero_api_key` private! It provides access to your servers.
         </Callout>
     </Step>
 </Steps>
 
-## Required Permissions
+## 🔐 Required Permissions
 
 <Callout type="info">
 Ensure your bot has these Discord permissions:
-- Administrator (for managing channels and roles)
-- Send Messages & Embeds
-- Read Message History
-- Use Slash Commands
+- 👑 Administrator (for managing channels and roles)
+- 💬 Send Messages & Embeds
+- 📜 Read Message History
+- ⚡ Use Slash Commands
 
 You can generate an invite link with the correct permissions in the Discord Developer Portal.
 </Callout>
 
-## Pterodactyl API Key Setup
+## 🔑 Pterodactyl API Key Setup
 
 <Steps>
     <Step>
+        **🌐 Access Panel**
         Log into your Pterodactyl panel
     </Step>
     <Step>
+        **👤 Account Settings**
         Go to Account Settings (top-right corner)
     </Step>
     <Step>
+        **🔑 API Credentials**
         Navigate to the API Credentials tab
     </Step>
     <Step>
+        **✨ Create Key**
         Create a new API key with these permissions:
-        - Read Server Status
-        - Send Server Commands
-        - Create Server Backups
+        - 📊 Read Server Status
+        - 💬 Send Server Commands
+        - 💾 Create Server Backups
     </Step>
     <Step>
+        **📝 Configure**
         Copy the API key and paste it in your `config.yaml`
         <Callout type="warning">
-            The API key is shown only once when created. If you lose it, you'll need to generate a new one.
+            ⚠️ The API key is shown only once when created. If you lose it, you'll need to generate a new one.
         </Callout>
     </Step>
 </Steps>
 
-## Configuration Tips
+## 💡 Configuration Tips
 
 <Steps>
     <Step>
-        **Security Best Practices**
+        **🔒 Security Best Practices**
         - Keep your config file in a secure location
         - Don't share your configuration file
         - Use a dedicated bot account
         - Regularly rotate API keys
     </Step>
     <Step>
-        **Logging Setup**
+        **📝 Logging Setup**
         - Set up a private logging channel
         - Keep logs for troubleshooting
         - Monitor the log file size
     </Step>
     <Step>
-        **Testing**
+        **🧪 Testing**
         - Test in a development server first
         - Verify all commands work
         - Check bot permissions
     </Step>
 </Steps>
 
-## Next Steps
+## 🔜 Next Steps
 
 Now that you've configured Scrapcord, you can:
-- [Add Your First Server](/docs/getting-started/first-server) - Learn how to add and manage servers
-- [Server Management](/docs/features/server-management) - Explore server management features
-- [Automated Wipes](/docs/features/automated-wipes) - Set up automated server wipes 
+- 🎮 [Server Management](/docs/features/server-management) - Explore server management features
+- 🔄 [Automated Wipes](/docs/features/automated-wipes) - Set up automated server wipes
+- 🤖 [Discord Commands](/docs/features/discord-commands) - Learn about available commands 
