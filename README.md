@@ -1,26 +1,18 @@
-# scrapcord-docs
+# Scrapcord Documentation
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+The official documentation site for Scrapcord, built with Next.js and Fumadocs.
 
-Run development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-pnpm dev
-# or
-yarn dev
-```
+- **Modern Design**: Clean and responsive documentation layout
+- **Full-Text Search**: Fast and accurate documentation search
+- **Dark Mode**: Built-in dark mode support
+- **MDX Support**: Write documentation with MDX
+- **Component Library**: Built with Fumadocs UI components
 
-Open http://localhost:3000 with your browser to see the result.
+## 🛠️ Tech Stack
 
-## Learn More
-
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.vercel.app) - learn about Fumadocs
+- [Next.js 15](https://nextjs.org) - React framework
+- [Fumadocs](https://fumadocs.vercel.app) - Documentation framework
+- [Tailwind CSS](https://tailwindcss.com) - Styling
+- [Motion](https://motion.dev) - Animations
