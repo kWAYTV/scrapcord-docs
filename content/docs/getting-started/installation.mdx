@@ -1,0 +1,121 @@
+---
+title: Installation Guide
+description: Learn how to install and set up Scrapcord on your system
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+
+# Installing Scrapcord
+
+This guide will walk you through the process of installing and setting up Scrapcord on your system.
+
+## Prerequisites
+
+Before installing Scrapcord, make sure you have:
+
+<Steps>
+    <Step>
+        **Python 3.8 or higher** installed on your system.
+        
+        You can check your Python version by running:
+        ```shell
+        python --version
+        ```
+    </Step>
+    <Step>
+        **A Discord Bot Token**
+        
+        Create one at [Discord Developer Portal](https://discord.com/developers/applications)
+    </Step>
+    <Step>
+        **Pterodactyl Panel Access**
+        
+        You need:
+        - Panel URL
+        - API Key with appropriate permissions
+    </Step>
+</Steps>
+
+## Installation Steps
+
+<Steps>
+    <Step>
+        **Clone the Repository**
+        ```shell
+        git clone https://github.com/kWAYTV/scrapcord
+        cd scrapcord
+        ```
+    </Step>
+    <Step>
+        **Install Dependencies**
+        <Tabs items={["pip", "poetry"]}>
+            <Tab>
+                ```shell
+                python -m pip install -r requirements.txt
+                ```
+            </Tab>
+            <Tab>
+                ```shell
+                poetry install
+                ```
+            </Tab>
+        </Tabs>
+    </Step>
+    <Step>
+        **Configure the Bot**
+        ```shell
+        cp config.yaml.example config.yaml
+        ```
+        <Callout type="warning">
+            Make sure to edit `config.yaml` with your bot token and other settings before proceeding.
+        </Callout>
+    </Step>
+    <Step>
+        **Start the Bot**
+        ```shell
+        python main.py
+        ```
+    </Step>
+</Steps>
+
+## Post-Installation
+
+After installing Scrapcord, you need to:
+
+<Steps>
+    <Step>
+        Invite the bot to your server using the OAuth2 URL from your Discord Developer Portal
+    </Step>
+    <Step>
+        Run the following commands to sync slash commands:
+        ```shell
+        .sync
+        .sync YOUR_GUILD_ID
+        ```
+    </Step>
+    <Step>
+        Restart Discord for the new commands to appear
+    </Step>
+</Steps>
+
+<Callout>
+    For security reasons, make sure to keep your `config.yaml` file private and never share your bot token or API keys.
+</Callout>
+
+## Troubleshooting
+
+<Callout type="error">
+    If you encounter any issues during installation:
+    1. Check if all prerequisites are met
+    2. Verify your Python version
+    3. Make sure all environment variables are set correctly
+    4. Join our [Discord server](https://discord.gg/scrapcord) for support
+</Callout>
+
+## Next Steps
+
+Now that you have Scrapcord installed, proceed to:
+- [Basic Configuration](/docs/getting-started/configuration) - Learn how to configure your bot
+- [Adding Your First Server](/docs/getting-started/first-server) - Set up your first Rust server
