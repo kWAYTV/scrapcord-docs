@@ -4,6 +4,7 @@ description: Discord bot that serves as a multipurpose bot for your Rust server 
 ---
 
 import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Card, Cards } from 'fumadocs-ui/components/card';
 
 # Welcome to Scrapcord
 
@@ -13,15 +14,12 @@ Scrapcord is a powerful Discord bot designed to manage and automate your Rust ga
 
 <Cards>
   <Card title="Server Management" href="/docs/features/server-management">
-    Add and manage multiple Rust servers with ease
+    Add and manage multiple Rust servers with ease through Discord commands
   </Card>
   <Card title="Automated Wipes" href="/docs/features/automated-wipes">
     Schedule and automate your server wipes with flexible configurations
   </Card>
-  <Card title="Configuration System" href="/docs/features/configuration">
-    Powerful YAML-based configuration system for each server
-  </Card>
-  <Card title="Discord Integration" href="/docs/features/discord-integration">
+  <Card title="Discord Commands" href="/docs/features/discord-commands">
     Full Discord slash command support and role-based permissions
   </Card>
 </Cards>
@@ -31,9 +29,14 @@ Scrapcord is a powerful Discord bot designed to manage and automate your Rust ga
 To get started with Scrapcord, check out these essential guides:
 
 <Steps>
-  <Step>[Installation Guide](/docs/getting-started/installation)</Step>
-  <Step>[Basic Configuration](/docs/getting-started/configuration)</Step>
-  <Step>[Adding Your First Server](/docs/getting-started/first-server)</Step>
+  <Step>
+    <a href="/docs/getting-started/installation">Installation Guide</a>
+    Learn how to install and set up Scrapcord on your system
+  </Step>
+  <Step>
+    <a href="/docs/getting-started/configuration">Basic Configuration</a>
+    Configure your bot with server details and permissions
+  </Step>
 </Steps>
 
 ## Support
