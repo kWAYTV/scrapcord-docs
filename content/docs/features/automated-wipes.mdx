@@ -1,0 +1,376 @@
+---
+title: Automated Wipes
+description: Configure and manage automated server wipes
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+
+# Automated Wipes
+
+Scrapcord can automatically wipe your Rust servers on a schedule. This guide explains how to configure and manage automated wipes.
+
+<Callout type="info">
+  All times are in UTC. Make sure to convert your local time to UTC when scheduling wipes.
+</Callout>
+
+## Wipe Process
+
+When a wipe is executed, Scrapcord follows these steps:
+
+<Steps>
+    <Step>
+        **Pre-Wipe Commands**
+        - Executes configured pre-wipe commands
+        - Useful for announcements or preparation tasks
+        
+        <Callout type="note">
+          Commands are executed in order with a 2-second delay between each command.
+        </Callout>
+    </Step>
+    <Step>
+        **Server Shutdown**
+        - Stops the server gracefully
+        - Force kills if configured and server doesn't stop
+        
+        <Callout type="warning">
+          Force kill should be used with caution as it may cause data corruption.
+        </Callout>
+    </Step>
+    <Step>
+        **Server Reinstall**
+        - Optionally reinstalls server if configured
+        - Waits for installation to complete
+        
+        <Callout type="note">
+          Reinstalling can help resolve plugin issues but takes longer to complete.
+        </Callout>
+    </Step>
+    <Step>
+        **Map Update**
+        - Generates new map seed or uses custom URL
+        - Updates server variables
+        
+        <Tabs items={["Random Seed", "Seed Range", "Custom Map"]}>
+            <Tab>
+                ```yaml
+                world_seeds:
+                  - seed: "random"
+                    size: "4500"
+                ```
+            </Tab>
+            <Tab>
+                ```yaml
+                world_seeds:
+                  - seed: "1000-9999"
+                    size: "4000-5000"
+                ```
+            </Tab>
+            <Tab>
+                ```yaml
+                custom_world_urls:
+                  - "https://example.com/map1.map"
+                  - "https://example.com/map2.map"
+                ```
+            </Tab>
+        </Tabs>
+    </Step>
+    <Step>
+        **File Cleanup**
+        - Removes configured files and directories
+        - Supports glob patterns for file matching
+        
+        <Tabs items={["Basic", "Advanced", "Full"]}>
+            <Tab>
+                ```yaml
+                files_to_remove:
+                  - "server/rust/*.db"
+                  - "server/rust/proceduralmap.*"
+                ```
+            </Tab>
+            <Tab>
+                ```yaml
+                files_to_remove:
+                  - "server/rust/*.db*"
+                  - "server/rust/proceduralmap.*.*.*"
+                  - "carbon/data/Clans/*.json"
+                  - "carbon/logs/*/*.log"
+                ```
+            </Tab>
+            <Tab>
+                ```yaml
+                files_to_remove:
+                  # Database files
+                  - "server/rust/*.db"
+                  - "server/rust/*.db-wal"
+                  - "server/rust/player.deaths.*.db"
+                  - "server/rust/player.identities.*.db"
+                  - "server/rust/player.states.*.db"
+                  - "server/rust/player.blueprints.*.db"
+                  - "server/rust/sv.files.*.db"
+                  # Map files
+                  - "server/rust/proceduralmap.*.*.*.map"
+                  - "server/rust/proceduralmap.*.*.*.sav"
+                  # Plugin data
+                  - "carbon/data/Clans/Players/*.json"
+                  - "carbon/data/PlaytimeTracker/*.json"
+                  # Logs
+                  - "carbon/logs/*/*.log"
+                ```
+            </Tab>
+        </Tabs>
+    </Step>
+    <Step>
+        **Server Startup**
+        - Starts the server
+        - Executes post-wipe commands when online
+        
+        <Callout type="note">
+          Post-wipe commands only run after the server is fully online.
+        </Callout>
+    </Step>
+</Steps>
+
+## Configuration
+
+<Tabs items={["Basic", "Weekly", "Monthly"]}>
+    <Tab>
+        ```yaml
+        force_kill: false
+        reinstall_server: false
+        files_to_remove:
+          - "server/rust/*.db"
+          - "server/rust/proceduralmap.*"
+        world_seeds:
+          - seed: "random"
+            size: "4500"
+        run_commands:
+          before:
+            - "say Server wipe in 5 minutes"
+          after:
+            - "say Server wiped successfully"
+        ```
+    </Tab>
+    <Tab>
+        ```yaml
+        force_kill: true
+        reinstall_server: true
+        files_to_remove:
+          - "server/rust/*.db*"
+          - "server/rust/proceduralmap.*.*.*"
+          - "carbon/data/Clans/*.json"
+        world_seeds:
+          - seed: "1000-9999"
+            size: "4000-5000"
+        run_commands:
+          before:
+            - "say Weekly wipe starting in 5 minutes"
+            - "kits.reset data all"
+          after:
+            - "oxide.reload *"
+            - "say Weekly wipe completed!"
+        ```
+    </Tab>
+    <Tab>
+        ```yaml
+        force_kill: true
+        reinstall_server: true
+        files_to_remove:
+          # Database files
+          - "server/rust/*.db*"
+          - "server/rust/player.*.db*"
+          # Map files
+          - "server/rust/proceduralmap.*.*.*"
+          # Plugin data
+          - "carbon/data/**/*.json"
+          # Logs
+          - "carbon/logs/**/*.log"
+        world_seeds:
+          - seed: "random"
+            size: "5000"
+        custom_world_urls:
+          - "https://example.com/monthly_map.map"
+        run_commands:
+          before:
+            - "say Monthly wipe starting in 10 minutes"
+            - "say Please finish your activities"
+            - "kits.reset data all"
+          after:
+            - "oxide.reload *"
+            - "say Monthly wipe completed!"
+            - "say Map size: 5000"
+            - "say Good luck!"
+        ```
+    </Tab>
+</Tabs>
+
+## Schedule Management
+
+### Adding Schedules
+
+<Steps>
+    <Step>
+        **Create Schedule**
+        ```bash
+        /schedule add server:rust-main cron:"0 4 * * 4" config:weekly
+        ```
+        
+        <Callout type="note">
+          The schedule will use the specified configuration for wipes.
+        </Callout>
+    </Step>
+    <Step>
+        **Common Schedules**
+        <Tabs items={["Daily", "Weekly", "Monthly", "Custom"]}>
+            <Tab>
+                ```bash
+                # Daily at 4 AM UTC
+                0 4 * * *
+                
+                # Daily at 12 PM UTC
+                0 12 * * *
+                
+                # Twice daily (4 AM and 4 PM UTC)
+                0 4,16 * * *
+                ```
+            </Tab>
+            <Tab>
+                ```bash
+                # Every Thursday at 4 AM UTC
+                0 4 * * 4
+                
+                # Every weekend at 12 PM UTC
+                0 12 * * 0,6
+                
+                # Every Friday at 8 PM UTC
+                0 20 * * 5
+                ```
+            </Tab>
+            <Tab>
+                ```bash
+                # First day of month at 4 AM UTC
+                0 4 1 * *
+                
+                # Last day of month at 8 PM UTC
+                0 20 L * *
+                
+                # First Thursday at 4 AM UTC
+                0 4 1-7 * 4
+                ```
+            </Tab>
+            <Tab>
+                ```bash
+                # Every 2 days at 4 AM UTC
+                0 4 */2 * *
+                
+                # Every 6 hours
+                0 */6 * * *
+                
+                # Every 3 days at 8 PM UTC
+                0 20 */3 * *
+                ```
+            </Tab>
+        </Tabs>
+        
+        <Callout type="info">
+          Use `/schedule cheatsheet` to see more cron expression examples.
+        </Callout>
+    </Step>
+</Steps>
+
+### Managing Schedules
+
+<Steps>
+    <Step>
+        **List Schedules**
+        ```bash
+        /schedule list server:rust-main
+        ```
+        Shows all schedules for a server with:
+        - Schedule ID
+        - Cron expression
+        - Next run time
+        - Configuration used
+    </Step>
+    <Step>
+        **View Schedule**
+        ```bash
+        /schedule show job:12345
+        ```
+        Displays detailed schedule information:
+        - Server details
+        - Configuration used
+        - Last run status
+        - Next run time
+    </Step>
+    <Step>
+        **Toggle Schedule**
+        ```bash
+        /schedule toggle job:12345
+        ```
+        
+        <Callout type="note">
+          Disabled schedules remain in the system but won't execute.
+        </Callout>
+    </Step>
+    <Step>
+        **Delete Schedule**
+        ```bash
+        /schedule delete job:12345
+        ```
+        
+        <Callout type="warning">
+          This action cannot be undone. The schedule will be permanently removed.
+        </Callout>
+    </Step>
+</Steps>
+
+### Manual Execution
+
+<Steps>
+    <Step>
+        **Run Schedule**
+        ```bash
+        /schedule run job:12345
+        ```
+        Executes a scheduled wipe immediately.
+    </Step>
+    <Step>
+        **Force Wipe**
+        ```bash
+        /schedule run job:12345 force:true
+        ```
+        
+        <Callout type="warning">
+          Force execution ignores the cooldown period between wipes.
+        </Callout>
+    </Step>
+</Steps>
+
+## Best Practices
+
+<Steps>
+    <Step>
+        **Schedule Planning**
+        - Set wipes during low-activity periods
+        - Consider player timezone distribution
+        - Allow sufficient time for backups
+    </Step>
+    <Step>
+        **Configuration Management**
+        - Test configurations on staging servers
+        - Keep backups of working configurations
+        - Document custom settings
+    </Step>
+    <Step>
+        **Monitoring**
+        - Check schedule execution logs
+        - Monitor server performance after wipes
+        - Verify plugin functionality
+    </Step>
+</Steps>
+
+<Callout type="info">
+  For more information about server management and configuration, see the [Server Management](/docs/features/server-management) guide.
+</Callout> 

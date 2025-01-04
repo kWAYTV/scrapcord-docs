@@ -1,0 +1,308 @@
+---
+title: Server Management
+description: Learn how to manage your Rust servers with Scrapcord
+---
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+
+# Server Management
+
+Scrapcord provides comprehensive server management features through Discord slash commands. This guide covers all aspects of managing your Rust servers.
+
+<Callout type="warning">
+  All server management commands require administrator permissions in Discord.
+</Callout>
+
+## Adding Servers
+
+<Steps>
+    <Step>
+        **Start the Process**
+        ```bash
+        /server add
+        ```
+        This will open a modal form with the following fields.
+    </Step>
+    <Step>
+        **Enter Server ID**
+        - Must be alphanumeric characters, underscores, or hyphens
+        - Used as unique identifier
+        - Example: `rust-main` or `staging_server`
+        
+        <Callout type="error">
+          Server IDs cannot be changed after creation. Choose carefully!
+        </Callout>
+    </Step>
+    <Step>
+        **Enter Server Name**
+        - Display name for the server
+        - Can contain spaces and special characters
+        - Example: `🌟 Main Server [Monthly]`
+        
+        <Callout type="note">
+          This is the name that will be displayed in commands and logs.
+        </Callout>
+    </Step>
+    <Step>
+        **Specify Config Name**
+        - Optional configuration name
+        - Defaults to "default" if not specified
+        - Example: `monthly` or `weekly`
+        
+        <Callout type="info">
+          You can have multiple configurations for different wipe schedules.
+        </Callout>
+    </Step>
+    <Step>
+        **Configure Server**
+        After adding the server, you'll receive a template configuration file. Modify it according to your needs and upload using:
+        ```bash
+        /config add server:rust-main file:config.yaml name:default
+        ```
+    </Step>
+</Steps>
+
+## Server Commands
+
+### Basic Management
+
+<Steps>
+    <Step>
+        **List Servers**
+        ```bash
+        /server list
+        ```
+        Shows all registered servers with:
+        - Server ID and name
+        - Creation date
+        - Available configurations
+    </Step>
+    <Step>
+        **Delete Server**
+        ```bash
+        /server delete server:rust-main
+        ```
+        <Callout type="error">
+          This will delete the server and ALL its configurations permanently!
+        </Callout>
+    </Step>
+</Steps>
+
+### Server Actions
+
+<Steps>
+    <Step>
+        **Execute Commands**
+        <Tabs items={["Basic", "Advanced", "Examples"]}>
+            <Tab>
+                ```bash
+                /action command server:rust-main command:"say Hello"
+                ```
+            </Tab>
+            <Tab>
+                ```bash
+                /action command server:rust-main command:"oxide.reload *" config:weekly
+                ```
+            </Tab>
+            <Tab>
+                ```bash
+                # Broadcast message
+                /action command server:rust-main command:"say Server restart in 5 minutes"
+                
+                # Reload plugin
+                /action command server:rust-main command:"oxide.reload BetterLoot"
+                
+                # Set time
+                /action command server:rust-main command:"env.time 12"
+                ```
+            </Tab>
+        </Tabs>
+        
+        <Callout type="note">
+          Commands are executed exactly as entered. Check your syntax carefully!
+        </Callout>
+    </Step>
+    <Step>
+        **Send Chat Messages**
+        <Tabs items={["Basic", "Advanced", "Examples"]}>
+            <Tab>
+                ```bash
+                /action message server:rust-main message:"Welcome to the server!"
+                ```
+            </Tab>
+            <Tab>
+                ```bash
+                /action message server:rust-main message:"Maintenance in 10 minutes" config:weekly
+                ```
+            </Tab>
+            <Tab>
+                ```bash
+                # Welcome message
+                /action message server:rust-main message:"Welcome to our server! Discord: discord.gg/example"
+                
+                # Wipe announcement
+                /action message server:rust-main message:"⚠️ Server wipe in 30 minutes! ⚠️"
+                
+                # Event announcement
+                /action message server:rust-main message:"🎉 Event starting at G10 in 5 minutes!"
+                ```
+            </Tab>
+        </Tabs>
+        
+        <Callout type="info">
+          Messages are automatically prefixed with the server's chat prefix.
+        </Callout>
+    </Step>
+</Steps>
+
+## Configuration Management
+
+### Managing Configs
+
+<Steps>
+    <Step>
+        **Add Configuration**
+        ```bash
+        /config add server:rust-main file:config.yaml name:weekly
+        ```
+        
+        <Callout type="note">
+          The configuration file must be in YAML format.
+        </Callout>
+    </Step>
+    <Step>
+        **List Configurations**
+        ```bash
+        /config list server:rust-main
+        ```
+        Shows all configurations for a server with:
+        - Configuration name
+        - Key settings
+        - File patterns
+        - Command counts
+    </Step>
+    <Step>
+        **View Configuration**
+        ```bash
+        /config show server:rust-main name:weekly
+        ```
+        Displays detailed configuration including:
+        - All settings
+        - File patterns
+        - Commands
+        - World seeds
+    </Step>
+    <Step>
+        **Delete Configuration**
+        ```bash
+        /config delete server:rust-main name:weekly
+        ```
+        
+        <Callout type="warning">
+          The default configuration cannot be deleted while other configurations exist.
+        </Callout>
+    </Step>
+</Steps>
+
+### Configuration Examples
+
+<Tabs items={["Basic", "Weekly", "Monthly"]}>
+    <Tab>
+        ```yaml
+        force_kill: false
+        reinstall_server: false
+        files_to_remove:
+          - "server/rust/*.db"
+          - "server/rust/proceduralmap.*"
+        world_seeds:
+          - seed: "random"
+            size: "4500"
+        run_commands:
+          before:
+            - "say Server wipe in 5 minutes"
+          after:
+            - "say Server wiped successfully"
+        ```
+    </Tab>
+    <Tab>
+        ```yaml
+        force_kill: true
+        reinstall_server: true
+        files_to_remove:
+          - "server/rust/*.db*"
+          - "server/rust/proceduralmap.*.*.*"
+          - "carbon/data/Clans/*.json"
+        world_seeds:
+          - seed: "1000-9999"
+            size: "4000-5000"
+        run_commands:
+          before:
+            - "say Weekly wipe starting in 5 minutes"
+            - "kits.reset data all"
+          after:
+            - "oxide.reload *"
+            - "say Weekly wipe completed!"
+        ```
+    </Tab>
+    <Tab>
+        ```yaml
+        force_kill: true
+        reinstall_server: true
+        files_to_remove:
+          # Database files
+          - "server/rust/*.db*"
+          - "server/rust/player.*.db*"
+          # Map files
+          - "server/rust/proceduralmap.*.*.*"
+          # Plugin data
+          - "carbon/data/**/*.json"
+          # Logs
+          - "carbon/logs/**/*.log"
+        world_seeds:
+          - seed: "random"
+            size: "5000"
+        custom_world_urls:
+          - "https://example.com/monthly_map.map"
+        run_commands:
+          before:
+            - "say Monthly wipe starting in 10 minutes"
+            - "say Please finish your activities"
+            - "kits.reset data all"
+          after:
+            - "oxide.reload *"
+            - "say Monthly wipe completed!"
+            - "say Map size: 5000"
+            - "say Good luck!"
+        ```
+    </Tab>
+</Tabs>
+
+## Permissions
+
+<Steps>
+    <Step>
+        **Discord Permissions**
+        - Administrator role in Discord
+        - Access to command channels
+        - View server logs permission
+    </Step>
+    <Step>
+        **Pterodactyl Permissions**
+        - Valid API key
+        - Server access
+        - Command execution rights
+        - File management access
+    </Step>
+    <Step>
+        **Server Requirements**
+        - RCON enabled
+        - Valid connection details
+        - Proper plugin configuration
+    </Step>
+</Steps>
+
+<Callout type="info">
+  For more information about automated wipes and scheduling, see the [Automated Wipes](/docs/features/automated-wipes) guide.
+</Callout> 
