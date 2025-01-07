@@ -1,2 +1,2 @@
 *.mdx
-content/docs/**/*.mdx 
+src/content/docs/**/*.mdx 
